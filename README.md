@@ -1,23 +1,27 @@
 # ThreeSixty.js
-[![npm version](https://badge.fury.io/js/%40mladenilic%2Fthreesixty.js.svg)](https://badge.fury.io/js/%40mladenilic%2Fthreesixty.js)
-[![CircleCI](https://circleci.com/gh/mladenilic/threesixty.js.svg?style=svg)](https://circleci.com/gh/mladenilic/threesixty.js)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4f32024bb20147b87dbf/maintainability)](https://codeclimate.com/github/mladenilic/threesixty/maintainability)
 
-Turn image sprite into 360 degree image.
+### Usage
+Link from dist folder
 
-![sample.gif](https://s3.eu-central-1.amazonaws.com/threesixty.js/sample.gif)
-
-View on Codepen - [http://codepen.io/mladenilic/full/zKOpmg/](http://codepen.io/mladenilic/full/zKOpmg/)
-
-### Install
-ThreeSixty is available as NPM package
-```
-npm i @mladenilic/threesixty.js
-```
-
-You can also use it via a CDN
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@mladenilic/threesixty.js/dist/threesixty.js"></script>
+<script src="path_to_js/threesixty/dist/threesixty.js"></script>
+
+<div class="container_class" id="threesixty">
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+  <img src="path_to_image" class="my_image_class" loading="lazy" >
+</div>
+<div class="container_class_button">
+  <button id="prev">Prev</button>
+  <button id="next">Next</button>
+</div>
 ```
 
 
@@ -28,9 +32,7 @@ No dependacies! Written in plain javascript.
 
 ```js
 const threesixty = new ThreeSixty(document.getElementById('threesixty'), {
-  image: 'images/example.jpg',
-  count: 19,
-  perRow: 4,
+  imageClass: 'my_image_class',
   prev: document.getElementById('prev'),
   next: document.getElementById('next')
 });
@@ -41,16 +43,8 @@ threesixty.play();
 
 ```js
 {
-  // Source image url
-  image: 'images/example.jpg', // Also supports passing an array of images
-
-  // Sprite options (If array of images are provided, these options are ignored)
-  count: 30,                   // Total number of images. Default: 0
-  perRow: 5,                   // Number of images per row. Default: 0
-
-  // Width & Height
-  width: 300,  // Image width. Default 300
-  height: 300, // Image height. Default 300
+  // Source image class
+  imageClass: 'my_image_class', 
 
   // Navigation
   prev: document.getElementById('prev'), // Previous button element. Default: null
@@ -68,21 +62,6 @@ threesixty.play();
 }
 ```
 
-### Array of images
-As an alternative to sprite image, ThreeSixty also supports using array of images:
-```js
-new ThreeSixty(document.getElementById('threesixty'), {
-  image: [
-    'images/example-1.jpeg',
-    'images/example-2.jpeg',
-    'images/example-3.jpeg',
-    ...
-  ],
-
-  ...
-})
-```
-In this case options `count` and `perRow` are ignored.
 
 ### Methods
 
