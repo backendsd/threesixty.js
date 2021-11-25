@@ -14,8 +14,6 @@ class ThreeSixty {
     this.container = container;
 
     this.#options = Object.assign({
-      width: 300,
-      height: 300,
       aspectRatio: 0,
       count: 0,
       perRow: 0,
@@ -25,11 +23,14 @@ class ThreeSixty {
       draggable: true,
       swipeable: true,
       keys: true,
-      inverted: false
+      inverted: false,
+      imageClass: '',
+      image : []
     }, options);
 
     this.#options.swipeTarget = this.#options.swipeTarget || this.container;
-
+    this.#options.image = Array.from(document.getElementsByClassName(this.#options.imageClass));
+    
     this.#sprite = !Array.isArray(this.#options.image);
     if (!this.sprite) {
       this.#options.count = this.#options.image.length;
@@ -68,6 +69,16 @@ class ThreeSixty {
 
   get sprite() {
     return this.#sprite;
+  }
+
+  hide() {
+    for( let i = 0; i < this.#options.image.length; i++){
+      this.#options.image[i].style.display = 'none';
+    }
+  }
+
+  show() {
+    this.#options.image[this.#index].style.display = 'block';
   }
 
   next() {
@@ -111,13 +122,6 @@ class ThreeSixty {
 
     this.#events.destroy();
 
-    this.container.style.width = '';
-    this.container.style.height = '';
-    this.container.style.backgroundImage = '';
-    this.container.style.backgroundPositionX = '';
-    this.container.style.backgroundPositionY = '';
-    this.container.style.backgroundSize = '';
-
     if (this.isResponsive) {
       window.removeEventListener('resize', this._windowResizeListener);
     }
@@ -132,33 +136,20 @@ class ThreeSixty {
   }
 
   _update () {
-    if (this.sprite) {
-      this.container.style.backgroundPositionX = -(this.#index % this.#options.perRow) * this.containerWidth + 'px';
-      this.container.style.backgroundPositionY = -Math.floor(this.#index / this.#options.perRow) * this.containerHeight + 'px';
-    } else {
-      this.container.style.backgroundImage = `url("${this.#options.image[this.#index]}")`;
-    }
+   
+    this.hide();
+    this.show();
+    //this.container.innerHTML = `<img src="${this.#options.image[this.#index]}" />`;
+    
   }
 
   _windowResizeListener() {
-    this.container.style.height = this.containerHeight + 'px';
+    
     this._update()
   }
 
   _initContainer() {
-    if (!this.isResponsive) {
-      this.container.style.width = this.containerWidth + 'px';
-    }
-    this.container.style.height = this.containerHeight + 'px';
-
-    if (this.sprite) {
-      this.container.style.backgroundImage = `url("${this.#options.image}")`;
-
-      const cols = this.#options.perRow;
-      const rows = Math.ceil(this.#options.count / this.#options.perRow);
-      this.container.style.backgroundSize = (cols * 100) + '% ' + (rows * 100) + '%';
-    }
-
+    
     if (this.isResponsive) {
       window.addEventListener('resize', this._windowResizeListener);
     }
